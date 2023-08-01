@@ -78,6 +78,7 @@ services:
      timeout: 5s
      retries: 120
  es01:
+    privileged: true
     depends_on:
       setup:
         condition: service_healthy
@@ -90,6 +91,7 @@ services:
     ports:
       - ${ES_PORT}:9200
     environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}
       - discovery.type=single-node
@@ -108,9 +110,10 @@ services:
       - xpack.license.self_generated.type=${LICENSE}
     mem_limit: ${ES_MEM_LIMIT}
     ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+      nproc: 65535
+      nofile:
+        soft: 26677
+        hard: 46677
     healthcheck:
       test:
         [
@@ -159,6 +162,11 @@ services:
        condition: service_healthy
    image: docker.elastic.co/beats/metricbeat:${STACK_VERSION}
    user: root
+   ulimits:
+      nproc: 65535
+      nofile:
+        soft: 26677
+        hard: 46677
    volumes:
      - certs:/usr/share/metricbeat/certs
      - metricbeatdata01:/usr/share/metricbeat/data
