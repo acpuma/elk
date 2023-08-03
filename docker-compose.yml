@@ -221,4 +221,5 @@ services:
      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
      - ELASTIC_HOSTS=https://es01:9200
    ports:
-     - ${LOGSTASH_PORT}:9600
+     - 9600:9600
+     - 50000:50000
