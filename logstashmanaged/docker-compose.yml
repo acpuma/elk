@@ -1,0 +1,19 @@
+version: "3.8"
+
+volumes:
+ logstashdata01:
+   driver: local
+
+services:
+  logstash01:
+   image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+   labels:
+     co.elastic.logs/module: logstash
+   user: root
+   volumes:
+     - logstashdata01:/usr/share/logstash/data
+     - "./logstash_ingest_data/:/usr/share/logstash/ingest_data/"
+     - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
+   ports:
+     - 9600:9600
+     - 50000:50000
