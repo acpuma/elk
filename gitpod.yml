@@ -4,8 +4,7 @@ vscode:
     - ms-azuretools.vscode-docker
 tasks:
   - name: elkdocker
-    init : |
-      docker-compose up -d
+    command : docker-compose up -d
 
 ports:
   - port: 50000
