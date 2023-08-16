@@ -1,0 +1,14 @@
+
+vscode:
+  extensions:
+    - ms-azuretools.vscode-docker
+tasks:
+  - name: elkdocker
+    init : |
+      docker-compose up -d
+
+ports:
+  - port: 50000
+  - name: ELK
+    port: 5601
+    onOpen: open-browser
